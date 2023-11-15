@@ -1,8 +1,10 @@
-import './averageSessionChart.css'
+import styled from 'styled-components'
+import { colors } from '../../utils/style/colors'
+import './averageSessionsChart.css'
 
 import {
-	AreaChart,
-	Area,
+	LineChart,
+	Line,
 	XAxis,
 	YAxis,
 	Tooltip,
@@ -13,6 +15,10 @@ export default function AverageSessionsChart() {
 	const data = {
 		userId: 18,
 		sessions: [
+			{
+				day: 1,
+				sessionLength: 30,
+			},
 			{
 				day: 1,
 				sessionLength: 30,
@@ -41,50 +47,63 @@ export default function AverageSessionsChart() {
 				day: 7,
 				sessionLength: 50,
 			},
+			{
+				day: 7,
+				sessionLength: 50,
+			},
 		],
 	}
 
 	if (data) {
-		const daysLabel = ['L', 'M', 'M', 'J', 'V', 'S', 'D']
+		const daysLabel = ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D', '']
 		var minVal = -1
 		var maxVal = 0
-		data.sessions.forEach((e, i) => {
-			e.day = daysLabel[i]
-			if (e.sessionLength < minVal || minVal === -1)
-				minVal = e.sessionLength
-			if (e.sessionLength > maxVal) maxVal = e.sessionLength
+		data.sessions.forEach((session, index) => {
+			session.day = daysLabel[index]
+			if (session.sessionLength < minVal || minVal === -1)
+				minVal = session.sessionLength
+			if (session.sessionLength > maxVal)
+				maxVal = session.sessionLength
 		})
 
 		return (
-			<ResponsiveContainer id='areaChart' width='100%'>
-				<AreaChart
+			<ResponsiveContainer id='lineChart' width='100%'>
+				<LineChart
 					data={data.sessions}
 					margin={{
-						top: 0,
+						top: 90,
 						right: 0,
-						left: 5,
-						bottom: 0,
+						left: 0,
+						bottom: 59,
 					}}
 				>
 					<XAxis
 						dataKey='day'
 						axisLine={false}
 						tickLine={false}
+						tickMargin={35}
+						height={25}
+						fillOpacity={0.5}
 						stroke='#e1e1e1'
 					/>
+
 					<YAxis
 						hide={true}
-						domain={[minVal, maxVal + maxVal]}
+						domain={[minVal + 1, maxVal + 1]}
 					/>
+
 					<Tooltip content={<CustomTooltip />} />
-					<Area
-						type='basis'
+
+					<Line
+						type='natural'
 						dataKey='sessionLength'
 						stroke='white'
 						strokeWidth={3}
-						fillOpacity={1}
+						strokeOpacity={0.5}
+						dot={false}
 						fill='transparent'
 					/>
+
 					<text
 						x='30'
 						y='40'
@@ -92,6 +111,7 @@ export default function AverageSessionsChart() {
 						textAnchor='left'
 						dominantBaseline='left'
 						fill='#e1e1e2'
+						fillOpacity={0.5}
 						style={{ fontSize: '18px' }}
 					>
 						Durée moyenne des
@@ -103,11 +123,12 @@ export default function AverageSessionsChart() {
 						textAnchor='left'
 						dominantBaseline='left'
 						fill='#e1e1e2'
+						fillOpacity={0.5}
 						style={{ fontSize: '18px' }}
 					>
 						sessions
 					</text>
-				</AreaChart>
+				</LineChart>
 			</ResponsiveContainer>
 		)
 	}
@@ -116,10 +137,20 @@ export default function AverageSessionsChart() {
 const CustomTooltip = ({ active, payload }) => {
 	if (active && payload && payload.length) {
 		return (
-			<div className='sessions-tooltip'>
+			<WrapperTooltip>
 				<p>{payload[0].value + ' min'}</p>
-			</div>
+			</WrapperTooltip>
 		)
 	}
 	return null
 }
+
+const WrapperTooltip = styled.div`
+	background-color: ${colors.white};
+	color: black;
+	text-align: center;
+	padding: 1px 7px;
+	font-size: 10px;
+	line-height: 24px;
+	font-weight: 500;
+`

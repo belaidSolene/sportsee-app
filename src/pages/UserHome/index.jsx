@@ -2,7 +2,7 @@ import Header from '../../components/Header'
 import LateralBar from '../../components/LateralBar'
 
 import ActivityChart from '../../components/ActivityChart'
-import AverageSessionsChart from '../../components/AverageSessionChart'
+import AverageSessionsChart from '../../components/AverageSessionsChart'
 import PerformanceChart from '../../components/PerformanceChart'
 import ScoreChart from '../../components/ScoreChart'
 

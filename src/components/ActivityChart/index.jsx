@@ -20,10 +20,8 @@ const WrapperTooltip = styled.div`
 	text-align: center;
 	padding: 11px;
 	margin-left: 10px;
-`
-
-const TextTooltip = styled.p`
 	line-height: 24px;
+	font-weight: 500;
 `
 
 export default function ActivityChart() {
@@ -87,12 +85,8 @@ export default function ActivityChart() {
 			if (active && payload && payload.length) {
 				return (
 					<WrapperTooltip>
-						<TextTooltip>
-							{payload[0].value + 'kg'}
-						</TextTooltip>
-						<TextTooltip>
-							{payload[1].value + 'Kcal'}
-						</TextTooltip>
+						<p>{payload[0].value + 'kg'}</p>
+						<p>{payload[1].value + 'Kcal'}</p>
 					</WrapperTooltip>
 				)
 			}
@@ -141,7 +135,13 @@ export default function ActivityChart() {
 
 					<YAxis yAxisId='calories' hide={true} />
 
-					<Tooltip content={<CustomTooltip />} />
+					<Tooltip
+						content={<CustomTooltip />}
+						fillOpacity={0.5}
+						cursor={{
+							fill: 'rgba(196, 196, 196, 0.50)',
+						}}
+					/>
 
 					<Bar
 						yAxisId='weight'
