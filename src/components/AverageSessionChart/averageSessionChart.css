@@ -1,0 +1,12 @@
+#areaChart{
+    background-color: red;
+    display: inline-block;
+    border-radius: 10px;
+}
+
+.sessions-tooltip{
+    background-color: white;
+    color: black;
+    text-align: center;
+    padding: 1px 15px;
+}
