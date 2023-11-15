@@ -1,3 +1,4 @@
+import { colors } from '../../utils/style/colors'
 import './performanceChart.css'
 import {
 	RadarChart,
@@ -8,7 +9,7 @@ import {
 } from 'recharts'
 
 export default function PerformanceChart() {
-	const data = {
+	const dataInit = {
 		userId: 18,
 		kind: {
 			1: 'cardio',
@@ -46,25 +47,75 @@ export default function PerformanceChart() {
 		],
 	}
 
-	if (data) {
-		const kindNames = data.kind
-		var res = data.data
-		var resData = res.map((item) => {
-			return { ...item, kind: kindNames[item.kind] }
-		})
+	const names = {
+		cardio: 'Cardio',
+		energy: 'Energie',
+		endurance: 'Endurance',
+		strength: 'Force',
+		speed: 'Vitesse',
+		intensity: 'Intensité',
+	}
 
+	const kindNames = dataInit.kind
+	const res = dataInit.data
+	const resData = res.map((item) => {
+		return { ...item, kind: names[kindNames[item.kind]] }
+	})
+
+	const data = [
+		{
+			value: 110,
+			kind: 'Intensité',
+		},
+		{
+			value: 220,
+			kind: 'Vitesse',
+		},
+		{
+			value: 80,
+			kind: 'Force',
+		},
+		{
+			value: 80,
+			kind: 'Endurance',
+		},
+		{
+			value: 240,
+			kind: 'Energie',
+		},
+		{
+			value: 200,
+			kind: 'Cardio',
+		},
+	]
+
+	if (data) {
 		return (
 			<ResponsiveContainer id='performance' width='100%'>
-				<RadarChart outerRadius={90} data={resData}>
+				<RadarChart
+					outerRadius={90}
+					data={data}
+					margin={{
+						top: 12,
+						bottom: 12,
+						left: 12,
+						right: 12,
+					}}
+				>
 					<PolarGrid radialLines={false} />
+
 					<PolarAngleAxis
 						dataKey='kind'
-						tick={{ fill: 'white', fontSize: 14 }}
+						tick={{
+							fill: `${colors.white}`,
+							fontSize: 14,
+						}}
 					/>
+
 					<Radar
 						name=''
 						dataKey='value'
-						fill='#ff0000'
+						fill={colors.primary}
 						fillOpacity={0.7}
 					/>
 				</RadarChart>

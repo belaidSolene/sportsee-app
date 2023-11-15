@@ -108,6 +108,19 @@ export default function ActivityChart() {
 						right: 90,
 					}}
 				>
+					<Legend
+						layout='horizontal'
+						verticalAlign='top'
+						align='right'
+						iconType='circle'
+						iconSize='8'
+						formatter={(value) => (
+							<span className='legendText'>
+								{value}
+							</span>
+						)}
+					/>
+
 					<CartesianGrid
 						strokeDasharray='2'
 						vertical={false}
@@ -159,28 +172,11 @@ export default function ActivityChart() {
 						barSize={8}
 					/>
 
-					<Legend
-						layout='horizontal'
-						verticalAlign='top'
-						align='right'
-						iconType='circle'
-						iconSize='8'
-						wrapperStyle={{
-							paddingTop: '24px',
-							paddingRight: '24px',
-						}}
-						formatter={(value) => (
-							<span className='legendText'>
-								{value}
-							</span>
-						)}
-					/>
-
 					<text
 						x='32'
-						y='24'
-						/* textAnchor='left'
-						dominantBaseline='left' */
+						y='54'
+						textAnchor='left'
+						dominantBaseline='left'
 					>
 						Activité quotidienne
 					</text>

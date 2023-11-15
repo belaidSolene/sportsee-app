@@ -4,7 +4,7 @@ import LateralBar from '../../components/LateralBar'
 import ActivityChart from '../../components/ActivityChart'
 import AverageSessionsChart from '../../components/AverageSessionsChart'
 import PerformanceChart from '../../components/PerformanceChart'
-import ScoreChart from '../../components/ScoreChart'
+import TodayScoreChart from '../../components/TodayScoreChart'
 
 import KeyDataCard from '../../components/KeyDataCard'
 
@@ -73,7 +73,7 @@ export default function UserHome() {
 						<SmallCharts>
 							<AverageSessionsChart />
 							<PerformanceChart />
-							<ScoreChart />
+							<TodayScoreChart />
 						</SmallCharts>
 					</ChartsContainer>
 

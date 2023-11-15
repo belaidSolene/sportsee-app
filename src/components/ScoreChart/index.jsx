@@ -6,7 +6,7 @@ export default function ScoreChart() {
 	const data = 0.12
 
 	if (data) {
-		var values = [{ value: data }, { value: 1 - data }]
+		const values = [{ value: data }, { value: 1 - data }]
 		const COLORS = ['#ff0000', '#fbfbfb']
 
 		return (

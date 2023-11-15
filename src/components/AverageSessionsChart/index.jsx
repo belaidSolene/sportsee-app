@@ -56,8 +56,8 @@ export default function AverageSessionsChart() {
 
 	if (data) {
 		const daysLabel = ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D', '']
-		var minVal = -1
-		var maxVal = 0
+		let minVal = -1
+		let maxVal = 0
 		data.sessions.forEach((session, index) => {
 			session.day = daysLabel[index]
 			if (session.sessionLength < minVal || minVal === -1)
