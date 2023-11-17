@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom'
 
-import Header from '../../components/Header'
-import LateralBar from '../../components/LateralBar'
+import { useUserData } from '../../utils/hooks'
 
 import {
 	lipidCount,
@@ -14,6 +13,9 @@ import {
 	todayScore,
 } from '../../utils/data/format'
 
+import Header from '../../components/Header'
+import LateralBar from '../../components/LateralBar'
+
 import ActivityChart from '../../components/ActivityChart'
 import AverageSessionsChart from '../../components/AverageSessionsChart'
 import PerformanceChart from '../../components/PerformanceChart'
@@ -25,6 +27,15 @@ import { colors } from '../../utils/style/colors'
 
 export default function UserHome() {
 	const { id } = useParams()
+
+	const { userData, isLoading, error } = useUserData(id)
+
+	if (isLoading) {
+		return <div>isLoading...</div>
+	}
+
+	const { user } = userData
+	console.log(user)
 
 	return (
 		<div>
