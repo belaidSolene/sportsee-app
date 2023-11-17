@@ -10,16 +10,35 @@ import KeyDataCard from '../../components/KeyDataCard'
 
 import styled from 'styled-components'
 import { colors } from '../../utils/style/colors'
+import { useParams } from 'react-router-dom'
 
 const Section = styled.section`
 	display: flex;
+`
+const HomeSection = styled.section`
+	width: 100%;
+	margin: 67px 90px 88px 107px;
+`
+
+const Title = styled.h1`
+	font-size: 34px;
+	font-weight: 500;
+`
+
+const FirstName = styled.span`
+	color: ${colors.primary};
+`
+
+const SubTitle = styled.h2`
+	font-size: 18px;
+	margin-top: 41px;
 `
 
 const InfoContainer = styled.div`
 	display: flex;
 	margin-top: 50px;
+	justify-content: space-between;
 	gap: 28px;
-	justify-content: center;
 	width: 100%;
 `
 
@@ -48,14 +67,14 @@ const NutritionalContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 39px;
-	width: 20%;
 `
+const calorieCount = 2500
+const proteinCount = 90
+const lipidCount = 120
+const carbohydrateCount = 150
 
 export default function UserHome() {
-	const calorieCount = 2500
-	const proteinCount = 90
-	const lipidCount = 120
-	const carbohydrateCount = 150
+	const { id } = useParams()
 
 	return (
 		<div>
@@ -64,41 +83,54 @@ export default function UserHome() {
 			<Section>
 				<LateralBar />
 
-				<InfoContainer>
-					<ChartsContainer>
-						<ActivityContainer>
-							<ActivityChart />
-						</ActivityContainer>
+				<HomeSection>
+					<Title>
+						Bonjour <FirstName>{id}</FirstName>
+					</Title>
 
-						<SmallCharts>
-							<AverageSessionsChart />
-							<PerformanceChart />
-							<TodayScoreChart />
-						</SmallCharts>
-					</ChartsContainer>
+					<SubTitle>
+						Félicitation ! Vous avez explosé vos
+						objectifs hier 👏
+					</SubTitle>
 
-					<NutritionalContent>
-						<KeyDataCard
-							name='calories'
-							number={calorieCount}
-						/>
+					<InfoContainer>
+						<ChartsContainer>
+							<ActivityContainer>
+								<ActivityChart />
+							</ActivityContainer>
 
-						<KeyDataCard
-							name='proteines'
-							number={proteinCount}
-						/>
+							<SmallCharts>
+								<AverageSessionsChart />
+								<PerformanceChart />
+								<TodayScoreChart />
+							</SmallCharts>
+						</ChartsContainer>
 
-						<KeyDataCard
-							name='glucides'
-							number={carbohydrateCount}
-						/>
+						<NutritionalContent>
+							<KeyDataCard
+								name='calories'
+								number={calorieCount}
+							/>
 
-						<KeyDataCard
-							name='lipides'
-							number={lipidCount}
-						/>
-					</NutritionalContent>
-				</InfoContainer>
+							<KeyDataCard
+								name='proteines'
+								number={proteinCount}
+							/>
+
+							<KeyDataCard
+								name='glucides'
+								number={
+									carbohydrateCount
+								}
+							/>
+
+							<KeyDataCard
+								name='lipides'
+								number={lipidCount}
+							/>
+						</NutritionalContent>
+					</InfoContainer>
+				</HomeSection>
 			</Section>
 		</div>
 	)

@@ -2,6 +2,7 @@ import { ReactComponent as Logo } from '../../assets/logo/logo.svg'
 
 import styled from 'styled-components'
 import { colors } from '../../utils/style/colors'
+import { Link } from 'react-router-dom'
 
 const StyleHeader = styled.header`
 	display: flex;
@@ -19,7 +20,7 @@ const StyledNav = styled.nav`
 	width: 100%;
 `
 
-const StyleLink = styled.a`
+const StyleLink = styled(Link)`
 	color: ${colors.white};
 `
 
@@ -31,13 +32,13 @@ export default function Header() {
 			<Logo />
 
 			<StyledNav>
-				<StyleLink>Accueil</StyleLink>
+				<StyleLink to={''}>Accueil</StyleLink>
 
-				<StyleLink>Profil</StyleLink>
+				<StyleLink to={''}>Profil</StyleLink>
 
-				<StyleLink>Réglage</StyleLink>
+				<StyleLink to={''}>Réglage</StyleLink>
 
-				<StyleLink>Communauté</StyleLink>
+				<StyleLink to={''}>Communauté</StyleLink>
 			</StyledNav>
 		</StyleHeader>
 	)

@@ -28,28 +28,32 @@ export default function IconsNav() {
 		{
 			icon: icon1,
 			alt: 'Lien pour des activités calmes',
+			link: '',
 		},
 		{
 			icon: icon2,
 			alt: 'Lien pour des activités aquatiques',
+			link: '',
 		},
 		{
 			icon: icon3,
 			alt: 'Lien pour des activités en extérieur',
+			link: '',
 		},
 		{
 			icon: icon4,
 			alt: 'Lien pour des activités musclées',
+			link: '',
 		},
 	]
 
 	return (
 		<nav>
 			<ul>
-				{iconsLink.map(({ icon, alt }, index) => {
+				{iconsLink.map(({ icon, alt, link }, index) => {
 					return (
 						<StyledLi key={index}>
-							<StyledLink>
+							<StyledLink to={link}>
 								<img
 									src={icon}
 									alt={alt}
