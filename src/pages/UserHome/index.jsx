@@ -1,16 +1,104 @@
+import { useParams } from 'react-router-dom'
+
 import Header from '../../components/Header'
 import LateralBar from '../../components/LateralBar'
+
+import {
+	lipidCount,
+	calorieCount,
+	carbohydrateCount,
+	proteinCount,
+	activityData,
+	performanceData,
+	averageSessionData,
+	todayScore,
+} from '../../utils/data/format'
 
 import ActivityChart from '../../components/ActivityChart'
 import AverageSessionsChart from '../../components/AverageSessionsChart'
 import PerformanceChart from '../../components/PerformanceChart'
-import TodayScoreChart from '../../components/TodayScoreChart'
-
+import ScoreChart from '../../components/ScoreChart'
 import KeyDataCard from '../../components/KeyDataCard'
 
 import styled from 'styled-components'
 import { colors } from '../../utils/style/colors'
-import { useParams } from 'react-router-dom'
+
+export default function UserHome() {
+	const { id } = useParams()
+
+	return (
+		<div>
+			<Header />
+
+			<Section>
+				<LateralBar />
+
+				<HomeSection>
+					<Title>
+						Bonjour <FirstName>{id}</FirstName>
+					</Title>
+
+					<SubTitle>
+						Félicitation ! Vous avez explosé vos
+						objectifs hier 👏
+					</SubTitle>
+
+					<InfoContainer>
+						<ChartsContainer>
+							<ActivityContainer>
+								<ActivityChart
+									data={
+										activityData.sessions
+									}
+								/>
+							</ActivityContainer>
+
+							<SmallCharts>
+								<AverageSessionsChart
+									data={
+										averageSessionData.sessions
+									}
+								/>
+								<PerformanceChart
+									data={
+										performanceData
+									}
+								/>
+								<ScoreChart
+									data={todayScore}
+								/>
+							</SmallCharts>
+						</ChartsContainer>
+
+						<NutritionalContent>
+							<KeyDataCard
+								name='calories'
+								number={calorieCount}
+							/>
+
+							<KeyDataCard
+								name='proteines'
+								number={proteinCount}
+							/>
+
+							<KeyDataCard
+								name='glucides'
+								number={
+									carbohydrateCount
+								}
+							/>
+
+							<KeyDataCard
+								name='lipides'
+								number={lipidCount}
+							/>
+						</NutritionalContent>
+					</InfoContainer>
+				</HomeSection>
+			</Section>
+		</div>
+	)
+}
 
 const Section = styled.section`
 	display: flex;
@@ -68,70 +156,3 @@ const NutritionalContent = styled.div`
 	flex-direction: column;
 	gap: 39px;
 `
-const calorieCount = 2500
-const proteinCount = 90
-const lipidCount = 120
-const carbohydrateCount = 150
-
-export default function UserHome() {
-	const { id } = useParams()
-
-	return (
-		<div>
-			<Header />
-
-			<Section>
-				<LateralBar />
-
-				<HomeSection>
-					<Title>
-						Bonjour <FirstName>{id}</FirstName>
-					</Title>
-
-					<SubTitle>
-						Félicitation ! Vous avez explosé vos
-						objectifs hier 👏
-					</SubTitle>
-
-					<InfoContainer>
-						<ChartsContainer>
-							<ActivityContainer>
-								<ActivityChart />
-							</ActivityContainer>
-
-							<SmallCharts>
-								<AverageSessionsChart />
-								<PerformanceChart />
-								<TodayScoreChart />
-							</SmallCharts>
-						</ChartsContainer>
-
-						<NutritionalContent>
-							<KeyDataCard
-								name='calories'
-								number={calorieCount}
-							/>
-
-							<KeyDataCard
-								name='proteines'
-								number={proteinCount}
-							/>
-
-							<KeyDataCard
-								name='glucides'
-								number={
-									carbohydrateCount
-								}
-							/>
-
-							<KeyDataCard
-								name='lipides'
-								number={lipidCount}
-							/>
-						</NutritionalContent>
-					</InfoContainer>
-				</HomeSection>
-			</Section>
-		</div>
-	)
-}

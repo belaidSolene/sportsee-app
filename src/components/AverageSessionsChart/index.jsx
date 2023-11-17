@@ -1,7 +1,3 @@
-import styled from 'styled-components'
-import { colors } from '../../utils/style/colors'
-import './averageSessionsChart.css'
-
 import {
 	LineChart,
 	Line,
@@ -10,55 +6,29 @@ import {
 	Tooltip,
 	ResponsiveContainer,
 } from 'recharts'
+import PropTypes from 'prop-types'
 
-export default function AverageSessionsChart() {
-	const data = {
-		userId: 18,
-		sessions: [
-			{
-				day: 1,
-				sessionLength: 30,
-			},
-			{
-				day: 1,
-				sessionLength: 30,
-			},
-			{
-				day: 2,
-				sessionLength: 40,
-			},
-			{
-				day: 3,
-				sessionLength: 50,
-			},
-			{
-				day: 4,
-				sessionLength: 30,
-			},
-			{
-				day: 5,
-				sessionLength: 30,
-			},
-			{
-				day: 6,
-				sessionLength: 50,
-			},
-			{
-				day: 7,
-				sessionLength: 50,
-			},
-			{
-				day: 7,
-				sessionLength: 50,
-			},
-		],
-	}
+import styled from 'styled-components'
+import { colors } from '../../utils/style/colors'
+import './averageSessionsChart.css'
 
+const WrapperTooltip = styled.div`
+	background-color: ${colors.white};
+	color: black;
+	text-align: center;
+	padding: 1px 7px;
+	font-size: 10px;
+	line-height: 24px;
+	font-weight: 500;
+`
+
+export default function AverageSessionsChart({ data }) {
 	if (data) {
 		const daysLabel = ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D', '']
 		let minVal = -1
 		let maxVal = 0
-		data.sessions.forEach((session, index) => {
+
+		data.forEach((session, index) => {
 			session.day = daysLabel[index]
 			if (session.sessionLength < minVal || minVal === -1)
 				minVal = session.sessionLength
@@ -66,10 +36,21 @@ export default function AverageSessionsChart() {
 				maxVal = session.sessionLength
 		})
 
+		const CustomTooltip = ({ active, payload }) => {
+			if (active && payload && payload.length) {
+				return (
+					<WrapperTooltip>
+						<p>{payload[0].value + ' min'}</p>
+					</WrapperTooltip>
+				)
+			}
+			return null
+		}
+
 		return (
 			<ResponsiveContainer id='lineChart' width='100%'>
 				<LineChart
-					data={data.sessions}
+					data={data}
 					margin={{
 						top: 90,
 						right: 0,
@@ -134,23 +115,11 @@ export default function AverageSessionsChart() {
 	}
 }
 
-const CustomTooltip = ({ active, payload }) => {
-	if (active && payload && payload.length) {
-		return (
-			<WrapperTooltip>
-				<p>{payload[0].value + ' min'}</p>
-			</WrapperTooltip>
-		)
-	}
-	return null
+AverageSessionsChart.propTypes = {
+	data: PropTypes.arrayOf(
+		PropTypes.shape({
+			day: PropTypes.number.isRequired,
+			sessionLength: PropTypes.number.isRequired,
+		}),
+	).isRequired,
 }
-
-const WrapperTooltip = styled.div`
-	background-color: ${colors.white};
-	color: black;
-	text-align: center;
-	padding: 1px 7px;
-	font-size: 10px;
-	line-height: 24px;
-	font-weight: 500;
-`

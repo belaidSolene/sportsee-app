@@ -8,6 +8,7 @@ import {
 	Bar,
 	ResponsiveContainer,
 } from 'recharts'
+import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
 import { colors } from '../../utils/style/colors'
@@ -24,52 +25,11 @@ const WrapperTooltip = styled.div`
 	font-weight: 500;
 `
 
-export default function ActivityChart() {
-	const data = {
-		userId: 18,
-		sessions: [
-			{
-				day: '2020-07-01',
-				kilogram: 70,
-				calories: 240,
-			},
-			{
-				day: '2020-07-02',
-				kilogram: 69,
-				calories: 220,
-			},
-			{
-				day: '2020-07-03',
-				kilogram: 70,
-				calories: 280,
-			},
-			{
-				day: '2020-07-04',
-				kilogram: 70,
-				calories: 500,
-			},
-			{
-				day: '2020-07-05',
-				kilogram: 69,
-				calories: 160,
-			},
-			{
-				day: '2020-07-06',
-				kilogram: 69,
-				calories: 162,
-			},
-			{
-				day: '2020-07-07',
-				kilogram: 69,
-				calories: 390,
-			},
-		],
-	}
-
+export default function ActivityChart({ data }) {
 	if (data) {
 		let minKg = -1
 		let maxKg = 0
-		data.sessions.forEach((session, index) => {
+		data.forEach((session, index) => {
 			session.day = index + 1
 
 			if (minKg === -1 || minKg > session.kilogram) {
@@ -100,7 +60,7 @@ export default function ActivityChart() {
 				height='100%'
 			>
 				<BarChart
-					data={data.sessions}
+					data={data}
 					margin={{
 						top: 112,
 						bottom: 62.5,
@@ -184,4 +144,14 @@ export default function ActivityChart() {
 			</ResponsiveContainer>
 		)
 	}
+}
+
+ActivityChart.propTypes = {
+	data: PropTypes.arrayOf(
+		PropTypes.shape({
+			day: PropTypes.string.isRequired,
+			kilogram: PropTypes.number.isRequired,
+			calories: PropTypes.number.isRequired,
+		}),
+	).isRequired,
 }

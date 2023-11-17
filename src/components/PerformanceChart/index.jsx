@@ -1,5 +1,3 @@
-import { colors } from '../../utils/style/colors'
-import './performanceChart.css'
 import {
 	RadarChart,
 	PolarGrid,
@@ -7,88 +5,12 @@ import {
 	Radar,
 	ResponsiveContainer,
 } from 'recharts'
+import PropTypes from 'prop-types'
 
-export default function PerformanceChart() {
-	const dataInit = {
-		userId: 18,
-		kind: {
-			1: 'cardio',
-			2: 'energy',
-			3: 'endurance',
-			4: 'strength',
-			5: 'speed',
-			6: 'intensity',
-		},
-		data: [
-			{
-				value: 200,
-				kind: 1,
-			},
-			{
-				value: 240,
-				kind: 2,
-			},
-			{
-				value: 80,
-				kind: 3,
-			},
-			{
-				value: 80,
-				kind: 4,
-			},
-			{
-				value: 220,
-				kind: 5,
-			},
-			{
-				value: 110,
-				kind: 6,
-			},
-		],
-	}
+import { colors } from '../../utils/style/colors'
+import './performanceChart.css'
 
-	const names = {
-		cardio: 'Cardio',
-		energy: 'Energie',
-		endurance: 'Endurance',
-		strength: 'Force',
-		speed: 'Vitesse',
-		intensity: 'Intensité',
-	}
-
-	const kindNames = dataInit.kind
-	const res = dataInit.data
-	const resData = res.map((item) => {
-		return { ...item, kind: names[kindNames[item.kind]] }
-	})
-
-	const data = [
-		{
-			value: 110,
-			kind: 'Intensité',
-		},
-		{
-			value: 220,
-			kind: 'Vitesse',
-		},
-		{
-			value: 80,
-			kind: 'Force',
-		},
-		{
-			value: 80,
-			kind: 'Endurance',
-		},
-		{
-			value: 240,
-			kind: 'Energie',
-		},
-		{
-			value: 200,
-			kind: 'Cardio',
-		},
-	]
-
+export default function PerformanceChart({ data }) {
 	if (data) {
 		return (
 			<ResponsiveContainer id='performance' width='100%'>
@@ -122,4 +44,13 @@ export default function PerformanceChart() {
 			</ResponsiveContainer>
 		)
 	}
+}
+
+PerformanceChart.propTypes = {
+	data: PropTypes.arrayOf(
+		PropTypes.shape({
+			value: PropTypes.number.isRequired,
+			kind: PropTypes.string.isRequired,
+		}),
+	).isRequired,
 }
