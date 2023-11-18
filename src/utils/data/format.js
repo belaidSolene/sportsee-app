@@ -1,10 +1,4 @@
-export const calorieCount = 2500
-export const proteinCount = 90
-export const lipidCount = 120
-export const carbohydrateCount = 150
-
 export const activityData = {
-	userId: 18,
 	sessions: [
 		{
 			day: '2020-07-01',
@@ -42,6 +36,8 @@ export const activityData = {
 			calories: 390,
 		},
 	],
+	minKg: 68,
+	maxKg: 71,
 }
 
 export const averageSessionData = {
@@ -50,6 +46,7 @@ export const averageSessionData = {
 		{
 			day: 1,
 			sessionLength: 30,
+			hide: true,
 		},
 		{
 			day: 1,
@@ -82,13 +79,14 @@ export const averageSessionData = {
 		{
 			day: 7,
 			sessionLength: 50,
+			activeDot: false,
 		},
 	],
 }
 
 /* 
 
-const dataInit = {
+const performanceData = {
 	userId: 18,
 	kind: {
 		1: 'cardio',
@@ -170,4 +168,59 @@ export const performanceData = [
 	},
 ]
 
-export const todayScore = 0.8
+const todayScore = 0.8
+
+const startAngle = 90
+const scoreToPercentage = todayScore * 100
+const endAngleCalc = startAngle + todayScore * 360
+
+export const score = {
+	startAngle: startAngle,
+	endAngle: endAngleCalc,
+	scoreToPercentage: scoreToPercentage,
+}
+
+export const averageSession = {
+	sessions: [
+		{
+			day: '', //vide
+			sessionLength: 30, //valeur de averageSessionData.sessions[0].sessionLength
+			activeDot: true, // nouvel attribut seulement pour lui
+		},
+		{
+			day: 'L',
+			sessionLength: 30,
+		},
+		{
+			day: 'M',
+			sessionLength: 40,
+		},
+		{
+			day: 'M',
+			sessionLength: 50,
+		},
+		{
+			day: 'J',
+			sessionLength: 30,
+		},
+		{
+			day: 'V',
+			sessionLength: 30,
+		},
+		{
+			day: 'S',
+			sessionLength: 50,
+		},
+		{
+			day: 'D',
+			sessionLength: 50,
+		},
+		{
+			day: '',
+			sessionLength: 50,
+			activeDot: false,
+		},
+	],
+	minLength: 20,
+	maxLength: 60,
+}

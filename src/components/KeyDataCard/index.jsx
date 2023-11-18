@@ -25,15 +25,15 @@ const ValueData = styled.p`
 	font-weight: 700;
 `
 
-const NameData = styled.p`
+const TypeData = styled.p`
 	font-size: 14px;
 	color: ${colors.accentScore};
 `
 
-export default function KeyDataCard({ name, number }) {
+export default function KeyDataCard({ type, number }) {
 	let data
 
-	switch (name) {
+	switch (type) {
 		case 'calories':
 			data = {
 				icon: iconCalories,
@@ -75,12 +75,15 @@ export default function KeyDataCard({ name, number }) {
 	return (
 		<Wrapper>
 			<img src={data.icon} alt={data.alt} />
-			<div className='name'>
+			<div>
 				<ValueData>
-					{number}
+					{type === 'calories'
+						? number.toLocaleString('en-US')
+						: number}
 					{data.value}
 				</ValueData>
-				<NameData>{name}</NameData>
+
+				<TypeData>{type}</TypeData>
 			</div>
 		</Wrapper>
 	)

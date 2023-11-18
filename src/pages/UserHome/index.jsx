@@ -1,17 +1,7 @@
 import { useParams } from 'react-router-dom'
 
 import { useUserData } from '../../utils/hooks'
-
-import {
-	lipidCount,
-	calorieCount,
-	carbohydrateCount,
-	proteinCount,
-	activityData,
-	performanceData,
-	averageSessionData,
-	todayScore,
-} from '../../utils/data/format'
+import { formatUserData } from '../../utils/format'
 
 import Header from '../../components/Header'
 import LateralBar from '../../components/LateralBar'
@@ -28,14 +18,20 @@ import { colors } from '../../utils/style/colors'
 export default function UserHome() {
 	const { id } = useParams()
 
-	const { userData, isLoading, error } = useUserData(id)
+	const { data, isLoading, error } = useUserData(id)
 
 	if (isLoading) {
 		return <div>isLoading...</div>
 	}
 
-	const { user } = userData
-	console.log(user)
+	const { user, score, activity, averageSessions, performance } =
+		formatUserData(data)
+
+	console.log(score)
+
+	const firstName = user.userInfos.firstName
+	const { calorieCount, proteinCount, carbohydrateCount, lipidCount } =
+		user.keyData
 
 	return (
 		<div>
@@ -46,7 +42,8 @@ export default function UserHome() {
 
 				<HomeSection>
 					<Title>
-						Bonjour <FirstName>{id}</FirstName>
+						Bonjour{' '}
+						<FirstName>{firstName}</FirstName>
 					</Title>
 
 					<SubTitle>
@@ -58,49 +55,47 @@ export default function UserHome() {
 						<ChartsContainer>
 							<ActivityContainer>
 								<ActivityChart
-									data={
-										activityData.sessions
-									}
+									data={activity}
 								/>
 							</ActivityContainer>
 
 							<SmallCharts>
 								<AverageSessionsChart
 									data={
-										averageSessionData.sessions
+										averageSessions
 									}
 								/>
 								<PerformanceChart
 									data={
-										performanceData
+										performance
 									}
 								/>
 								<ScoreChart
-									data={todayScore}
+									data={score}
 								/>
 							</SmallCharts>
 						</ChartsContainer>
 
 						<NutritionalContent>
 							<KeyDataCard
-								name='calories'
+								type='calories'
 								number={calorieCount}
 							/>
 
 							<KeyDataCard
-								name='proteines'
+								type='proteines'
 								number={proteinCount}
 							/>
 
 							<KeyDataCard
-								name='glucides'
+								type='glucides'
 								number={
 									carbohydrateCount
 								}
 							/>
 
 							<KeyDataCard
-								name='lipides'
+								type='lipides'
 								number={lipidCount}
 							/>
 						</NutritionalContent>

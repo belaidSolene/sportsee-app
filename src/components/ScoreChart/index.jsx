@@ -6,14 +6,10 @@ import './scoreChart.css'
 import { colors } from '../../utils/style/colors'
 
 export default function ScoreChart({ data }) {
-	const startAngle = 90
-	const scoreToPercentage = data * 100
-	const endAngleCalc = startAngle + data * 360
-
 	const scoreValue = [
 		{
-			name: 'Score',
-			score: scoreToPercentage,
+			name: 'score',
+			score: data.scoreToPercentage,
 			fill: colors.primary,
 		},
 	]
@@ -27,8 +23,8 @@ export default function ScoreChart({ data }) {
 				innerRadius={300}
 				outerRadius={80}
 				barSize={13}
-				startAngle={startAngle}
-				endAngle={endAngleCalc}
+				startAngle={data.startAngle}
+				endAngle={data.endAngle}
 			>
 				<RadialBar dataKey='score' cornerRadius={10} />
 
@@ -55,7 +51,7 @@ export default function ScoreChart({ data }) {
 					style={{ fontSize: '25px' }}
 					fill='#282D30'
 				>
-					{scoreToPercentage + '%'}
+					{data.scoreToPercentage + '%'}
 				</text>
 				<text
 					x='50%'
@@ -83,5 +79,11 @@ export default function ScoreChart({ data }) {
 }
 
 ScoreChart.propTypes = {
-	data: PropTypes.number.isRequired,
+	data: PropTypes.objectOf(
+		PropTypes.shape({
+			startAngle: PropTypes.number.isRequired,
+			endAngle: PropTypes.number.isRequired,
+			scoreToPercentage: PropTypes.number.isRequired,
+		}),
+	).isRequired,
 }

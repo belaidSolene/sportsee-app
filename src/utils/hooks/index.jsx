@@ -1,17 +1,14 @@
 import { useEffect, useState } from 'react'
 
-export function useUserData(userId, formatDataFn = null) {
+export function useUserData(userId) {
 	const userUrls = {
 		user: `http://localhost:3000/user/${userId}`,
-		activity: `http://localhost:3000/user/${userId}/activity`,
-		averageSessions: `http://localhost:3000/user/${userId}/average-sessions`,
-		performance: `http://localhost:3000/user/${userId}/performance`,
+		userActivity: `http://localhost:3000/user/${userId}/activity`,
+		userAverageSessions: `http://localhost:3000/user/${userId}/average-sessions`,
+		userPerformance: `http://localhost:3000/user/${userId}/performance`,
 	}
-	const { data, isLoading, error } = useFetchURLS(userUrls)
 
-	const userData = formatDataFn ? formatDataFn(data) : data
-
-	return { userData, isLoading, error }
+	return useFetchURLS(userUrls)
 }
 
 function useFetchURLS(userUrls) {

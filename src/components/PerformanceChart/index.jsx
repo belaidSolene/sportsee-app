@@ -14,16 +14,7 @@ export default function PerformanceChart({ data }) {
 	if (data) {
 		return (
 			<ResponsiveContainer id='performance' width='100%'>
-				<RadarChart
-					outerRadius={90}
-					data={data}
-					margin={{
-						top: 12,
-						bottom: 12,
-						left: 12,
-						right: 12,
-					}}
-				>
+				<RadarChart outerRadius='70%' data={data}>
 					<PolarGrid radialLines={false} />
 
 					<PolarAngleAxis

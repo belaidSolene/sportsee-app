@@ -27,20 +27,6 @@ const WrapperTooltip = styled.div`
 
 export default function ActivityChart({ data }) {
 	if (data) {
-		let minKg = -1
-		let maxKg = 0
-		data.forEach((session, index) => {
-			session.day = index + 1
-
-			if (minKg === -1 || minKg > session.kilogram) {
-				minKg = session.kilogram
-			}
-
-			if (maxKg < session.kilogram) {
-				maxKg = session.kilogram
-			}
-		})
-
 		const CustomTooltip = ({ active, payload }) => {
 			if (active && payload && payload.length) {
 				return (
@@ -60,7 +46,7 @@ export default function ActivityChart({ data }) {
 				height='100%'
 			>
 				<BarChart
-					data={data}
+					data={data.sessions}
 					margin={{
 						top: 112,
 						bottom: 62.5,
@@ -101,7 +87,7 @@ export default function ActivityChart({ data }) {
 						axisLine={false}
 						tickLine={false}
 						tickMargin={45}
-						domain={[minKg - 1, maxKg + 1]}
+						domain={[data.minKg, data.maxKg]}
 						tickCount={4}
 						stroke={colors.scaleActivity}
 					/>
