@@ -1,7 +1,9 @@
-import { useParams } from 'react-router-dom'
+import { redirect, useParams } from 'react-router-dom'
 
 import { useUserData } from '../../utils/hooks'
 import { formatUserData } from '../../utils/format'
+
+import Error from '../Error'
 
 import Header from '../../components/Header'
 import LateralBar from '../../components/LateralBar'
@@ -18,92 +20,115 @@ import { colors } from '../../utils/style/colors'
 export default function UserHome() {
 	const { id } = useParams()
 
-	const { data, isLoading, error } = useUserData(id)
+	const { data, isLoading, error } = useUserData(id, true)
 
 	if (isLoading) {
 		return <div>isLoading...</div>
 	}
 
-	const { user, score, activity, averageSessions, performance } =
-		formatUserData(data)
+	if (error) {
+		redirect('/')
+		return <Error />
+	} else {
+		const {
+			user,
+			score,
+			keyData,
+			activity,
+			averageSessions,
+			performance,
+		} = formatUserData(data)
 
-	console.log(score)
+		return (
+			<div>
+				<Header />
 
-	const firstName = user.userInfos.firstName
-	const { calorieCount, proteinCount, carbohydrateCount, lipidCount } =
-		user.keyData
+				<Section>
+					<LateralBar />
 
-	return (
-		<div>
-			<Header />
+					<HomeSection>
+						<Title>
+							Bonjour{' '}
+							<FirstName>
+								{user.firstName}
+							</FirstName>
+						</Title>
 
-			<Section>
-				<LateralBar />
+						<SubTitle>
+							Félicitation ! Vous avez
+							explosé vos objectifs hier 👏
+						</SubTitle>
 
-				<HomeSection>
-					<Title>
-						Bonjour{' '}
-						<FirstName>{firstName}</FirstName>
-					</Title>
+						<InfoContainer>
+							<ChartsContainer>
+								<ActivityContainer>
+									<ActivityChart
+										data={
+											activity
+										}
+									/>
+								</ActivityContainer>
 
-					<SubTitle>
-						Félicitation ! Vous avez explosé vos
-						objectifs hier 👏
-					</SubTitle>
+								<SmallCharts>
+									<AverageSessionsChart
+										data={
+											averageSessions
+										}
+									/>
+									<PerformanceChart
+										data={
+											performance
+										}
+									/>
+									<ScoreChart
+										data={
+											score
+										}
+									/>
+								</SmallCharts>
+							</ChartsContainer>
 
-					<InfoContainer>
-						<ChartsContainer>
-							<ActivityContainer>
-								<ActivityChart
-									data={activity}
-								/>
-							</ActivityContainer>
-
-							<SmallCharts>
-								<AverageSessionsChart
-									data={
-										averageSessions
-									}
-								/>
-								<PerformanceChart
-									data={
-										performance
-									}
-								/>
-								<ScoreChart
-									data={score}
-								/>
-							</SmallCharts>
-						</ChartsContainer>
-
-						<NutritionalContent>
-							<KeyDataCard
-								type='calories'
-								number={calorieCount}
-							/>
-
-							<KeyDataCard
-								type='proteines'
-								number={proteinCount}
-							/>
-
-							<KeyDataCard
-								type='glucides'
-								number={
-									carbohydrateCount
-								}
-							/>
-
-							<KeyDataCard
-								type='lipides'
-								number={lipidCount}
-							/>
-						</NutritionalContent>
-					</InfoContainer>
-				</HomeSection>
-			</Section>
-		</div>
-	)
+							<NutritionalContent>
+								{Object.keys(
+									keyData,
+								).map((key) => {
+									const {
+										count,
+										name,
+										value,
+										icon,
+										alt,
+									} = keyData[key]
+									return (
+										<KeyDataCard
+											key={
+												key
+											} // Assurez-vous d'utiliser une clé unique si vous avez plusieurs éléments dans la liste
+											count={
+												count
+											}
+											name={
+												name
+											}
+											value={
+												value
+											}
+											icon={
+												icon
+											}
+											alt={
+												alt
+											}
+										/>
+									)
+								})}
+							</NutritionalContent>
+						</InfoContainer>
+					</HomeSection>
+				</Section>
+			</div>
+		)
+	}
 }
 
 const Section = styled.section`

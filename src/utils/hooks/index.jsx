@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 
 export function useUserData(userId) {
 	const userUrls = {
-		user: `http://localhost:3000/user/${userId}`,
-		userActivity: `http://localhost:3000/user/${userId}/activity`,
-		userAverageSessions: `http://localhost:3000/user/${userId}/average-sessions`,
-		userPerformance: `http://localhost:3000/user/${userId}/performance`,
+		userData: `http://localhost:3000/user/${userId}`,
+		activityData: `http://localhost:3000/user/${userId}/activity`,
+		averageSessionsData: `http://localhost:3000/user/${userId}/average-sessions`,
+		performanceData: `http://localhost:3000/user/${userId}/performance`,
 	}
 
 	return useFetchURLS(userUrls)
@@ -24,9 +24,14 @@ function useFetchURLS(userUrls) {
 				const requests = Object.entries(userUrls).map(
 					async ([key, url]) => {
 						const response = await fetch(url)
+
+						if (!response.ok) {
+							setError(true)
+						}
+
 						const responseData =
 							await response.json()
-						return { [key]: responseData.data } // Utilisez la clé comme clé pour l'objet résultant
+						return { [key]: responseData } // Utilisez la clé comme clé pour l'objet résultant
 					},
 				)
 
@@ -40,7 +45,9 @@ function useFetchURLS(userUrls) {
 				setData(mergedData)
 			} catch (err) {
 				console.error(err)
+
 				setError(true)
+				throw err
 			} finally {
 				setLoading(false)
 			}

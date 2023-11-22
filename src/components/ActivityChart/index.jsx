@@ -55,11 +55,15 @@ export default function ActivityChart({ data }) {
 					}}
 				>
 					<Legend
-						layout='horizontal'
+						iconSize={8}
 						verticalAlign='top'
 						align='right'
+						wrapperStyle={{
+							top: '16px',
+							right: '26px',
+							fontSize: 15,
+						}}
 						iconType='circle'
-						iconSize='8'
 						formatter={(value) => (
 							<span className='legendText'>
 								{value}
@@ -133,11 +137,18 @@ export default function ActivityChart({ data }) {
 }
 
 ActivityChart.propTypes = {
-	data: PropTypes.arrayOf(
+	data: PropTypes.objectOf(
 		PropTypes.shape({
-			day: PropTypes.string.isRequired,
-			kilogram: PropTypes.number.isRequired,
-			calories: PropTypes.number.isRequired,
+			sessions: PropTypes.arrayOf(
+				PropTypes.shape({
+					date: PropTypes.string.isRequired,
+					day: PropTypes.number.isRequired,
+					kilogram: PropTypes.number.isRequired,
+					calories: PropTypes.number.isRequired,
+				}),
+			),
+			minKg: PropTypes.number.isRequired,
+			maxKg: PropTypes.number.isRequired,
 		}),
 	).isRequired,
 }

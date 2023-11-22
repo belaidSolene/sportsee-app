@@ -1,20 +1,35 @@
-export function formatUserData(userData) {
-	const { user, userActivity, userAverageSessions, userPerformance } =
-		userData
+import iconCalories from '../../assets/icon-keyData/bg/calories-icon.svg'
+import iconProtein from '../../assets/icon-keyData/bg/protein-icon.svg'
+import iconCarbs from '../../assets/icon-keyData/bg/carbs-icon.svg'
+import iconFat from '../../assets/icon-keyData/bg/fat-icon.svg'
 
-	const userScore = user.todayScore ? user.todayScore : user.score
+export function formatUserData(data) {
+	const { userData, activityData, averageSessionsData, performanceData } =
+		data
 
-	const score = formatScore(userScore)
-	const activity = formatActivity(userActivity)
-	const averageSessions = formatAverageSessions(userAverageSessions)
-	const performance = formatPerformance(userPerformance)
+	const { user, score, keyData } = formatUser(userData.data)
+	const activity = formatActivity(activityData.data)
+	const averageSessions = formatAverageSessions(averageSessionsData.data)
+	const performance = formatPerformance(performanceData.data)
 
 	return {
 		user: user,
 		score: score,
+		keyData: keyData,
 		activity: activity,
 		averageSessions: averageSessions,
 		performance: performance,
+	}
+}
+
+function formatUser(user) {
+	const score = formatScore(user.todayScore ? user.todayScore : user.score)
+	const keyData = formatKeyData(user.keyData)
+
+	return {
+		user: user.userInfos,
+		score: score,
+		keyData: keyData,
 	}
 }
 
@@ -31,6 +46,45 @@ function formatScore(userScore) {
 		startAngle: startAngle,
 		endAngle: endAngleCalc,
 		scoreToPercentage: scoreToPercentage,
+	}
+}
+
+function formatKeyData(keyDatas) {
+	const { calorieCount, proteinCount, carbohydrateCount, lipidCount } =
+		keyDatas
+
+	const kCal = 'kCal'
+	const g = 'g'
+
+	return {
+		calorie: {
+			count: calorieCount.toLocaleString('en-US'),
+			name: 'calories',
+			value: kCal,
+			icon: iconCalories,
+			alt: 'icône des calories',
+		},
+		protein: {
+			count: proteinCount,
+			name: 'protéines',
+			value: g,
+			icon: iconProtein,
+			alt: 'icône des protéines',
+		},
+		carbohydrate: {
+			count: carbohydrateCount,
+			name: 'glucides',
+			icon: iconCarbs,
+			alt: 'icône des glucides',
+			value: g,
+		},
+		lipid: {
+			count: lipidCount,
+			name: 'lipides',
+			icon: iconFat,
+			alt: 'icône des lipides',
+			value: g,
+		},
 	}
 }
 
