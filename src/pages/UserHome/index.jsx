@@ -16,6 +16,7 @@ import KeyDataCard from '../../components/KeyDataCard'
 
 import styled from 'styled-components'
 import { colors } from '../../utils/style/colors'
+import { device } from '../../utils/style/breakpoints'
 
 export default function UserHome() {
 	const { id } = useParams()
@@ -43,7 +44,7 @@ export default function UserHome() {
 			<div>
 				<Header />
 
-				<Section>
+				<Main>
 					<LateralBar />
 
 					<HomeSection>
@@ -70,21 +71,29 @@ export default function UserHome() {
 								</ActivityContainer>
 
 								<SmallCharts>
-									<AverageSessionsChart
-										data={
-											averageSessions
-										}
-									/>
-									<PerformanceChart
-										data={
-											performance
-										}
-									/>
-									<ScoreChart
-										data={
-											score
-										}
-									/>
+									<AverageSessionsContainer>
+										<AverageSessionsChart
+											data={
+												averageSessions
+											}
+										/>
+									</AverageSessionsContainer>
+
+									<PerformanceContainer>
+										<PerformanceChart
+											data={
+												performance
+											}
+										/>
+									</PerformanceContainer>
+
+									<ScoreContainer>
+										<ScoreChart
+											data={
+												score
+											}
+										/>
+									</ScoreContainer>
 								</SmallCharts>
 							</ChartsContainer>
 
@@ -125,18 +134,22 @@ export default function UserHome() {
 							</NutritionalContent>
 						</InfoContainer>
 					</HomeSection>
-				</Section>
+				</Main>
 			</div>
 		)
 	}
 }
 
-const Section = styled.section`
+const Main = styled.main`
 	display: flex;
 `
 const HomeSection = styled.section`
 	width: 100%;
 	margin: 67px 90px 88px 107px;
+
+	@media (${device.laptopSmall}) {
+		margin: 50px 67px 66px 80px;
+	}
 `
 
 const Title = styled.h1`
@@ -159,11 +172,19 @@ const InfoContainer = styled.div`
 	justify-content: space-between;
 	gap: 28px;
 	width: 100%;
+
+	@media (${device.laptopSmall}) {
+		flex-direction: column-reverse;
+	}
 `
 
 const ChartsContainer = styled.div`
 	width: 70%;
 	height: 1212px;
+
+	@media (${device.laptopSmall}) {
+		width: 100%;
+	}
 `
 
 const ActivityContainer = styled.div`
@@ -172,18 +193,52 @@ const ActivityContainer = styled.div`
 	height: 44%;
 	overflow: hidden;
 	border-radius: 10px;
+	width: 100%;
+
+	@media (${device.laptopSmall}) {
+		height: 400px;
+	}
 `
 
 const SmallCharts = styled.div`
-	display: flex;
-	gap: 30px;
-	justify-content: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 30px;
 	margin-top: 20px;
-	height: 263px;
+	width: 100%;
+	height: 300px;
+
+	@media (${device.laptopSmall}) {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: repeat(2, 300px);
+	}
+`
+
+const AverageSessionsContainer = styled.div`
+	height: inherit;
+	@media (${device.laptopSmall}) {
+		grid-column: 1 / span 2;
+		grid-row: 2;
+	}
+`
+const PerformanceContainer = styled.div`
+	height: inherit;
+`
+
+const ScoreContainer = styled.div`
+	height: inherit;
 `
 
 const NutritionalContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 39px;
+
+	@media (${device.laptopSmall}) {
+		flex-direction: row;
+		justify-content: space-between;
+		width: 100%;
+		background-color: ${colors.bgGraph};
+		gap: 0;
+	}
 `
