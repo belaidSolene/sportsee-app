@@ -1,5 +1,13 @@
+/**
+ * The UserHome component represents the main page for a user's home, displaying various charts and information.
+ * It uses React Router for navigation and custom utility functions for data formatting.
+ * The component fetches user data using the 'useUserData' hook and renders different charts and sections.
+ * Uses styled-components for styling and breakpoints for responsive design.
+ */
+
 import { redirect, useParams } from 'react-router-dom'
 
+// Custom utility hook and function imports
 import { useUserData } from '../../utils/hooks'
 import { formatUserData } from '../../utils/format'
 
@@ -14,13 +22,16 @@ import PerformanceChart from '../../components/PerformanceChart'
 import ScoreChart from '../../components/ScoreChart'
 import KeyDataCard from '../../components/KeyDataCard'
 
+// Importing necessary dependencies for styling
 import styled from 'styled-components'
 import { colors } from '../../utils/style/colors'
 import { device } from '../../utils/style/breakpoints'
 
 export default function UserHome() {
+	// Fetching user ID from route parameters
 	const { id } = useParams()
 
+	// Fetching user data using the 'useUserData' hook
 	const { data, isLoading, error } = useUserData(id, true)
 
 	if (isLoading) {
@@ -28,9 +39,11 @@ export default function UserHome() {
 	}
 
 	if (error) {
+		// Redirecting to the home page in case of an error
 		redirect('/')
 		return <Error />
 	} else {
+		// Destructuring formatted user data for rendering
 		const {
 			user,
 			score,
@@ -40,6 +53,7 @@ export default function UserHome() {
 			performance,
 		} = formatUserData(data)
 
+		// JSX structure for rendering the UserHome component content
 		return (
 			<div>
 				<Header />
@@ -60,6 +74,7 @@ export default function UserHome() {
 							explosé vos objectifs hier 👏
 						</SubTitle>
 
+						{/* InfoContainer containing charts and key data */}
 						<InfoContainer>
 							<ChartsContainer>
 								<ActivityContainer>
@@ -70,6 +85,7 @@ export default function UserHome() {
 									/>
 								</ActivityContainer>
 
+								{/* SmallCharts containing AverageSessionsChart, PerformanceChart, and ScoreChart */}
 								<SmallCharts>
 									<AverageSessionsContainer>
 										<AverageSessionsChart
@@ -97,7 +113,8 @@ export default function UserHome() {
 								</SmallCharts>
 							</ChartsContainer>
 
-							<NutritionalContent>
+							{/* KeyDataContainer for rendering KeyDataCard components */}
+							<KeyDataContainer>
 								{Object.keys(
 									keyData,
 								).map((key) => {
@@ -131,7 +148,7 @@ export default function UserHome() {
 										/>
 									)
 								})}
-							</NutritionalContent>
+							</KeyDataContainer>
 						</InfoContainer>
 					</HomeSection>
 				</Main>
@@ -140,6 +157,7 @@ export default function UserHome() {
 	}
 }
 
+// Styled-components for styling the UserHome component
 const Main = styled.main`
 	display: flex;
 `
@@ -221,6 +239,7 @@ const AverageSessionsContainer = styled.div`
 		grid-row: 2;
 	}
 `
+
 const PerformanceContainer = styled.div`
 	height: inherit;
 `
@@ -229,7 +248,7 @@ const ScoreContainer = styled.div`
 	height: inherit;
 `
 
-const NutritionalContent = styled.div`
+const KeyDataContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 39px;

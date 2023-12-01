@@ -1,8 +1,25 @@
+/**
+ * The LateralBar component represents a vertical sidebar containing navigation icons
+ * and a copyright notice. It utilizes the IconsNav component for the icon navigation.
+ */
+
 import IconsNav from '../IconsNav'
 
+// Importing necessary dependencies for styling
 import styled from 'styled-components'
 import { colors } from '../../utils/style/colors'
 
+export default function LateralBar() {
+	// JSX structure defining the LateralBar component layout
+	return (
+		<Bar>
+			<IconsNav />
+			<Copyright>Copyright, SportSee 2023</Copyright>
+		</Bar>
+	)
+}
+
+// Sidebar container styling
 const Bar = styled.aside`
 	background-color: ${colors.bgNav};
 	width: 117px;
@@ -14,6 +31,7 @@ const Bar = styled.aside`
 	justify-content: space-between;
 `
 
+// Copyright notice styling
 const Copyright = styled.p`
 	font-size: 12px;
 
@@ -24,12 +42,3 @@ const Copyright = styled.p`
 	text-align: center;
 	color: ${colors.white};
 `
-
-export default function LateralBar() {
-	return (
-		<Bar>
-			<IconsNav />
-			<Copyright>Copyright, SportSee 2023</Copyright>
-		</Bar>
-	)
-}

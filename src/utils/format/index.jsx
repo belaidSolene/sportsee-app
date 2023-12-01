@@ -3,6 +3,13 @@ import iconProtein from '../../assets/icon-keyData/bg/protein-icon.svg'
 import iconCarbs from '../../assets/icon-keyData/bg/carbs-icon.svg'
 import iconFat from '../../assets/icon-keyData/bg/fat-icon.svg'
 
+/**
+ * The formatUserData function takes raw data and formats it into a structured object
+ * containing user, score, keyData, activity, averageSessions, and performance information.
+ *
+ * @param {Object} data - The raw data object containing user, activity, average sessions, and performance data.
+ * @returns {Object} - The formatted user data object.
+ */
 export function formatUserData(data) {
 	const { userData, activityData, averageSessionsData, performanceData } =
 		data
@@ -22,6 +29,12 @@ export function formatUserData(data) {
 	}
 }
 
+/**
+ * The formatUser function extracts relevant information from the user data.
+ *
+ * @param {Object} user - The raw user data.
+ * @returns {Object} - The formatted user information.
+ */
 function formatUser(user) {
 	const score = formatScore(user.todayScore ? user.todayScore : user.score)
 	const keyData = formatKeyData(user.keyData)
@@ -33,6 +46,12 @@ function formatUser(user) {
 	}
 }
 
+/**
+ * The formatScore function converts user score data into a format suitable for rendering.
+ *
+ * @param {number} userScore - The user's score.
+ * @returns {Object|null} - The formatted score information or null if score is invalid.
+ */
 function formatScore(userScore) {
 	if (!userScore || userScore < 0 || userScore > 1) {
 		return null
@@ -49,6 +68,13 @@ function formatScore(userScore) {
 	}
 }
 
+/**
+ * The formatKeyData function converts raw key data into a structured object
+ * with formatted information about calories, protein, carbohydrates, and lipids.
+ *
+ * @param {Object} keyDatas - The raw key data.
+ * @returns {Object} - The formatted key data.
+ */
 function formatKeyData(keyDatas) {
 	const { calorieCount, proteinCount, carbohydrateCount, lipidCount } =
 		keyDatas
@@ -88,6 +114,13 @@ function formatKeyData(keyDatas) {
 	}
 }
 
+/**
+ * The formatActivity function converts raw activity data into a structured object
+ * with information about sessions, min and max kilograms.
+ *
+ * @param {Object} activityData - The raw activity data.
+ * @returns {Object|null} - The formatted activity information or null if data is invalid.
+ */
 function formatActivity(activityData) {
 	if (
 		!activityData ||
@@ -123,6 +156,13 @@ function formatActivity(activityData) {
 	}
 }
 
+/**
+ * The formatAverageSessions function converts raw average sessions data into a structured object
+ * with information about days of the week and session lengths.
+ *
+ * @param {Object} userAverageSessions - The raw average sessions data.
+ * @returns {Object|null} - The formatted average sessions information or null if data is invalid.
+ */
 function formatAverageSessions(userAverageSessions) {
 	if (
 		!userAverageSessions ||
@@ -132,9 +172,6 @@ function formatAverageSessions(userAverageSessions) {
 		return null
 	}
 
-	let minLength = userAverageSessions.sessions[0].sessionLength
-	let maxLength = userAverageSessions.sessions[0].sessionLength
-
 	const transformedSessions = userAverageSessions.sessions.map(
 		(session) => {
 			const daysOfWeek = ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D']
@@ -143,9 +180,6 @@ function formatAverageSessions(userAverageSessions) {
 				day: daysOfWeek[session.day],
 				sessionLength: session.sessionLength,
 			}
-
-			minLength = Math.min(minLength, session.sessionLength)
-			maxLength = Math.max(maxLength, session.sessionLength)
 
 			return transformedSession
 		},
@@ -168,13 +202,16 @@ function formatAverageSessions(userAverageSessions) {
 		activeDot: false,
 	})
 
-	return {
-		sessions: transformedSessions,
-		minLength: minLength - 1,
-		maxLength: maxLength + 1,
-	}
+	return transformedSessions
 }
 
+/**
+ * The formatPerformance function converts raw performance data into a structured object
+ * with information about performance values and kinds, ordered by a predefined kind order.
+ *
+ * @param {Object} userPerformance - The raw performance data.
+ * @returns {Object|null} - The formatted performance information or null if data is invalid.
+ */
 function formatPerformance(userPerformance) {
 	if (
 		!userPerformance ||

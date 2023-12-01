@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react'
 
+/**
+ * Custom hook to fetch user-related data from multiple endpoints.
+ *
+ * @param {string} userId - The user ID.
+ * @returns {Object} - An object containing user data, loading state, and error state.
+ */
 export function useUserData(userId) {
 	const userUrls = {
 		userData: `http://localhost:3000/user/${userId}`,
@@ -11,7 +17,13 @@ export function useUserData(userId) {
 	return useFetchURLS(userUrls)
 }
 
-function useFetchURLS(userUrls) {
+/**
+ * Custom hook to perform data fetching from multiple URLs concurrently.
+ *
+ * @param {Object} urls - An object containing URLs to fetch data.
+ * @returns {Object} - An object containing merged data, loading state, and error state.
+ */
+function useFetchURLS(urls) {
 	const [data, setData] = useState({})
 	const [isLoading, setLoading] = useState(true)
 	const [error, setError] = useState(false)
@@ -21,7 +33,7 @@ function useFetchURLS(userUrls) {
 
 		async function fetchData() {
 			try {
-				const requests = Object.entries(userUrls).map(
+				const requests = Object.entries(urls).map(
 					async ([key, url]) => {
 						const response = await fetch(url)
 
@@ -31,13 +43,14 @@ function useFetchURLS(userUrls) {
 
 						const responseData =
 							await response.json()
-						return { [key]: responseData } // Utilisez la clé comme clé pour l'objet résultant
+						return { [key]: responseData } // Use the key as the key for the resulting object
 					},
 				)
 
 				const responseDataArray =
 					await Promise.all(requests)
-				// Convertissez le tableau d'objets en un objet unique en utilisant reduce
+
+				// Convert the array of objects into a single object using reduce
 				const mergedData = responseDataArray.reduce(
 					(acc, curr) => ({ ...acc, ...curr }),
 					{},

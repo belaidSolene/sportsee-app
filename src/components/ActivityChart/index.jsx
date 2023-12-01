@@ -1,3 +1,9 @@
+/**
+ * The ActivityChart component renders a bar chart using Recharts library to visualize daily activity data.
+ * It takes a 'data' prop, which should be an object containing sessions and activity range information.
+ * The component displays two bars representing weight (in kilograms) and calories burned for each day.
+ * It uses styled-components for styling and PropTypes for type validation.
+ */
 import {
 	BarChart,
 	CartesianGrid,
@@ -8,25 +14,32 @@ import {
 	Bar,
 	ResponsiveContainer,
 } from 'recharts'
+
 import PropTypes from 'prop-types'
 
+// Importing necessary dependencies for styling
 import styled from 'styled-components'
 import { colors } from '../../utils/style/colors'
+
+// Importing the stylesheet for additional styling
 import './activityChart.css'
 
-const WrapperTooltip = styled.div`
-	background-color: ${colors.caloriesActivity};
-	color: ${colors.white};
-	font-size: 10px;
-	text-align: center;
-	padding: 11px;
-	margin-left: 10px;
-	line-height: 24px;
-	font-weight: 500;
-`
-
+/**
+ * The ActivityChart component renders a bar chart to visually represent daily activity data.
+ *
+ * @param {Object} props - The properties passed to the ActivityChart component.
+ * @param {Object} props.data - An object containing data properties for rendering the bar chart.
+ * @param {Array} props.data.sessions - An array of objects representing daily activity sessions.
+ * @param {string} props.data.sessions.date - The date of the activity session.
+ * @param {number} props.data.sessions.day - The day of the week.
+ * @param {number} props.data.sessions.kilogram - The weight in kilograms for the session.
+ * @param {number} props.data.sessions.calories - The calories burned for the session.
+ * @param {number} props.data.minKg - The minimum weight range for the Y-axis.
+ * @param {number} props.data.maxKg - The maximum weight range for the Y-axis.
+ */
 export default function ActivityChart({ data }) {
 	if (data) {
+		// Custom tooltip component for displaying additional information on hover
 		const CustomTooltip = ({ active, payload }) => {
 			if (active && payload && payload.length) {
 				return (
@@ -39,6 +52,7 @@ export default function ActivityChart({ data }) {
 			return null
 		}
 
+		// JSX structure defining the ActivityChart component layout
 		return (
 			<ResponsiveContainer
 				id='barChart'
@@ -54,6 +68,7 @@ export default function ActivityChart({ data }) {
 						right: 90,
 					}}
 				>
+					{/* Legend for the chart */}
 					<Legend
 						iconSize={8}
 						verticalAlign='top'
@@ -71,12 +86,14 @@ export default function ActivityChart({ data }) {
 						)}
 					/>
 
+					{/* CartesianGrid for styling the chart grid */}
 					<CartesianGrid
 						strokeDasharray='2'
 						vertical={false}
 						stroke='#DEDEDE'
 					/>
 
+					{/* XAxis representing the day */}
 					<XAxis
 						dataKey='day'
 						tickLine={false}
@@ -85,6 +102,7 @@ export default function ActivityChart({ data }) {
 						stroke={colors.scaleActivity}
 					/>
 
+					{/* YAxis representing weight (right side) */}
 					<YAxis
 						yAxisId='weight'
 						orientation='right'
@@ -96,8 +114,10 @@ export default function ActivityChart({ data }) {
 						stroke={colors.scaleActivity}
 					/>
 
+					{/* YAxis representing calories (hidden) */}
 					<YAxis yAxisId='calories' hide={true} />
 
+					{/* Tooltip for displaying additional information on hover */}
 					<Tooltip
 						content={<CustomTooltip />}
 						fillOpacity={0.5}
@@ -106,6 +126,7 @@ export default function ActivityChart({ data }) {
 						}}
 					/>
 
+					{/* Bar representing weight */}
 					<Bar
 						yAxisId='weight'
 						dataKey='kilogram'
@@ -114,6 +135,7 @@ export default function ActivityChart({ data }) {
 						barSize={8}
 					/>
 
+					{/* Bar representing calories */}
 					<Bar
 						yAxisId='calories'
 						dataKey='calories'
@@ -122,6 +144,7 @@ export default function ActivityChart({ data }) {
 						barSize={8}
 					/>
 
+					{/* Text element for chart title */}
 					<text
 						x='32'
 						y='54'
@@ -136,19 +159,30 @@ export default function ActivityChart({ data }) {
 	}
 }
 
+// PropTypes for type validation of ActivityChart props
 ActivityChart.propTypes = {
-	data: PropTypes.objectOf(
-		PropTypes.shape({
-			sessions: PropTypes.arrayOf(
-				PropTypes.shape({
-					date: PropTypes.string.isRequired,
-					day: PropTypes.number.isRequired,
-					kilogram: PropTypes.number.isRequired,
-					calories: PropTypes.number.isRequired,
-				}),
-			),
-			minKg: PropTypes.number.isRequired,
-			maxKg: PropTypes.number.isRequired,
-		}),
-	).isRequired,
+	data: PropTypes.shape({
+		sessions: PropTypes.arrayOf(
+			PropTypes.shape({
+				date: PropTypes.string.isRequired,
+				day: PropTypes.number.isRequired,
+				kilogram: PropTypes.number.isRequired,
+				calories: PropTypes.number.isRequired,
+			}),
+		).isRequired,
+		minKg: PropTypes.number.isRequired,
+		maxKg: PropTypes.number.isRequired,
+	}).isRequired,
 }
+
+// Styled component for custom tooltip styling
+const WrapperTooltip = styled.div`
+	background-color: ${colors.caloriesActivity};
+	color: ${colors.white};
+	font-size: 10px;
+	text-align: center;
+	padding: 11px;
+	margin-left: 10px;
+	line-height: 24px;
+	font-weight: 500;
+`
