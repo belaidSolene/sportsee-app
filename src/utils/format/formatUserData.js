@@ -172,6 +172,9 @@ function formatAverageSessions(userAverageSessions) {
 		return null
 	}
 
+	let minLength = userAverageSessions.sessions[0].sessionLength
+	let maxLength = userAverageSessions.sessions[0].sessionLength
+
 	const transformedSessions = userAverageSessions.sessions.map(
 		(session) => {
 			const daysOfWeek = ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D']
@@ -180,6 +183,9 @@ function formatAverageSessions(userAverageSessions) {
 				day: daysOfWeek[session.day],
 				sessionLength: session.sessionLength,
 			}
+
+			minLength = Math.min(minLength, session.sessionLength)
+			maxLength = Math.max(maxLength, session.sessionLength)
 
 			return transformedSession
 		},
@@ -202,7 +208,11 @@ function formatAverageSessions(userAverageSessions) {
 		activeDot: false,
 	})
 
-	return transformedSessions
+	return {
+		sessions: transformedSessions,
+		minLength: minLength - 1,
+		maxLength: maxLength + 1,
+	}
 }
 
 /**

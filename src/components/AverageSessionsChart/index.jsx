@@ -35,7 +35,7 @@ export default function AverageSessionsChart({ data }) {
 	// Custom tooltip component for displaying additional information on hover
 	const CustomTooltip = ({ active, payload, label }) => {
 		if (active && payload && payload.length) {
-			const index = data.findIndex(
+			const index = data.sessions.findIndex(
 				(session) => session.day === label,
 			)
 			if (index !== 0 && index !== data.length - 1) {
@@ -53,7 +53,7 @@ export default function AverageSessionsChart({ data }) {
 	return (
 		<ResponsiveContainer id='lineChart' width='100%'>
 			<LineChart
-				data={data}
+				data={data.sessions}
 				margin={{
 					top: 90,
 					right: 0,
@@ -73,7 +73,10 @@ export default function AverageSessionsChart({ data }) {
 				/>
 
 				{/* YAxis representing session length (hidden) */}
-				<YAxis hide={true} />
+				<YAxis
+					hide={true}
+					domain={[data.minLength, data.maxLength]}
+				/>
 
 				{/* Tooltip for displaying additional information on hover */}
 				<Tooltip content={<CustomTooltip />} />
@@ -122,12 +125,16 @@ export default function AverageSessionsChart({ data }) {
 
 // PropTypes for type validation of component props
 AverageSessionsChart.propTypes = {
-	data: PropTypes.arrayOf(
-		PropTypes.shape({
-			day: PropTypes.string.isRequired,
-			sessionLength: PropTypes.number.isRequired,
-		}),
-	).isRequired,
+	data: PropTypes.shape({
+		sessions: PropTypes.arrayOf(
+			PropTypes.shape({
+				day: PropTypes.string.isRequired,
+				sessionLength: PropTypes.number.isRequired,
+			}),
+		).isRequired,
+		minLength: PropTypes.number.isRequired,
+		maxLength: PropTypes.number.isRequired,
+	}).isRequired,
 }
 
 // Styled component for custom tooltip styling

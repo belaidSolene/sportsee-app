@@ -60,7 +60,6 @@ function useFetchURLS(urls) {
 				console.error(err)
 
 				setError(true)
-				throw err
 			} finally {
 				setLoading(false)
 			}

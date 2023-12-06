@@ -9,7 +9,7 @@ import { redirect, useParams } from 'react-router-dom'
 
 // Custom utility hook and function imports
 import { useUserData } from '../../utils/hooks'
-import { formatUserData } from '../../utils/format'
+import { formatUserData } from '../../utils/format/formatUserData'
 
 import Error from '../Error'
 
@@ -32,7 +32,7 @@ export default function UserHome() {
 	const { id } = useParams()
 
 	// Fetching user data using the 'useUserData' hook
-	const { data, isLoading, error } = useUserData(id, true)
+	const { data, isLoading, error } = useUserData(id)
 
 	if (isLoading) {
 		return <div>isLoading...</div>
