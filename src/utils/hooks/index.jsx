@@ -66,7 +66,7 @@ function useFetchURLS(urls) {
 		}
 
 		fetchData()
-	}, [])
+	}, [error])
 
 	return { data, isLoading, error }
 }
