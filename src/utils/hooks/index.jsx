@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react'
+import { redirect } from 'react-router-dom'
+
+import Error from '../../pages/Error'
 
 import user12 from '../../mocks/user12/user12.json'
 import performance12 from '../../mocks/user12/performance12.json'
@@ -14,16 +17,10 @@ import averageSessions18 from '../../mocks/user18/average-sessions18.json'
  * Custom hook to fetch user-related data from multiple endpoints.
  *
  * @param {string} userId - The user ID.
+ *  @param {boolean} isMock - A boolean indicating whether to use mock data.
  * @returns {Object} - An object containing user data, loading state, and error state.
  */
 export function useUserData(userId, useMock = false) {
-	const userUrls = {
-		userData: `http://localhost:3000/user/${userId}`,
-		activityData: `http://localhost:3000/user/${userId}/activity`,
-		averageSessionsData: `http://localhost:3000/user/${userId}/average-sessions`,
-		performanceData: `http://localhost:3000/user/${userId}/performance`,
-	}
-
 	const mockUser = {
 		userData: parseInt(userId) === 12 ? user12 : user18,
 		activityData: parseInt(userId) === 12 ? activity12 : activity18,
@@ -35,6 +32,13 @@ export function useUserData(userId, useMock = false) {
 			parseInt(userId) === 12 ? performance12 : performance18,
 	}
 
+	const userUrls = {
+		userData: `http://localhost:3000/user/${userId}`,
+		activityData: `http://localhost:3000/user/${userId}/activity`,
+		averageSessionsData: `http://localhost:3000/user/${userId}/average-sessions`,
+		performanceData: `http://localhost:3000/user/${userId}/performance`,
+	}
+
 	return useFetchURLS(useMock ? mockUser : userUrls, useMock)
 }
 
@@ -42,12 +46,13 @@ export function useUserData(userId, useMock = false) {
  * Custom hook to perform data fetching from multiple URLs concurrently.
  *
  * @param {Object} urls - An object containing URLs to fetch data.
+ *  @param {boolean} isMock - A boolean indicating whether to use mock data.
  * @returns {Object} - An object containing merged data, loading state, and error state.
  */
 function useFetchURLS(urls, useMock) {
 	const [data, setData] = useState({})
 	const [isLoading, setLoading] = useState(true)
-	const [error, setError] = useState(false)
+	const [error, setError] = useState({ err: false, msg: '' })
 
 	useEffect(() => {
 		setLoading(true)
@@ -59,7 +64,10 @@ function useFetchURLS(urls, useMock) {
 						const response = await fetch(url)
 
 						if (!response.ok) {
-							setError(true)
+							setError({
+								err: true,
+								msg: 'Id unknown',
+							})
 						}
 
 						const responseData =
@@ -80,7 +88,7 @@ function useFetchURLS(urls, useMock) {
 			} catch (err) {
 				console.error(err)
 
-				setError(true)
+				setError({ err: true })
 			} finally {
 				setLoading(false)
 			}
@@ -89,13 +97,11 @@ function useFetchURLS(urls, useMock) {
 		if (useMock) {
 			setData(urls)
 			setLoading(false)
-			setError(false)
-
-			console.log('mockup')
+			setError({ err: false })
 		} else {
 			fetchData()
 		}
-	}, [error])
+	}, [])
 
 	return { data, isLoading, error }
 }

@@ -32,16 +32,16 @@ export default function UserHome() {
 	const { id } = useParams()
 
 	// Fetching user data using the 'useUserData' hook
-	const { data, isLoading, error } = useUserData(id, true)
+	const { data, isLoading, error } = useUserData(id, false)
 
 	if (isLoading) {
 		return <div>isLoading...</div>
 	}
 
-	if (error) {
+	if (error.err) {
 		// Redirecting to the home page in case of an error
 		redirect('/')
-		return <Error />
+		return <Error error={error.msg} />
 	} else {
 		// Destructuring formatted user data for rendering
 		const {
