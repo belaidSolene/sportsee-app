@@ -21,9 +21,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { colors } from '../../utils/style/colors'
 
-// Importing the stylesheet for additional styling
-import './activityChart.css'
-
 /**
  * The ActivityChart component renders a bar chart to visually represent daily activity data.
  *
@@ -80,9 +77,9 @@ export default function ActivityChart({ data }) {
 						}}
 						iconType='circle'
 						formatter={(value) => (
-							<span className='legendText'>
+							<LegendText>
 								{value}
-							</span>
+							</LegendText>
 						)}
 					/>
 
@@ -185,4 +182,8 @@ const WrapperTooltip = styled.div`
 	margin-left: 10px;
 	line-height: 24px;
 	font-weight: 500;
+`
+
+const LegendText = styled.span`
+	color: ${colors.scaleActivity};
 `

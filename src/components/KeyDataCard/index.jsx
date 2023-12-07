@@ -55,12 +55,11 @@ const Wrapper = styled.div`
 	overflow: hidden;
 	border-radius: 10px;
 	padding: 32px;
-	width: 258px;
+	max-width: 258px;
 	height: 124px;
 	line-height: 24px;
 
 	@media (${device.laptopSmall}) {
-		width: 160px;
 		height: 100px;
 		padding: 0px 20px;
 	}
@@ -79,10 +78,16 @@ const ValueData = styled.p`
 	margin: 0;
 	font-size: 20px;
 	font-weight: 700;
+	@media (${device.laptopSmall}) {
+		font-size: 18px;
+	}
 `
 
 // Styling for the data type text inside the card
 const TypeData = styled.p`
 	font-size: 14px;
 	color: ${colors.accentScore};
+	@media (${device.laptopSmall}) {
+		font-size: 14px;
+	}
 `

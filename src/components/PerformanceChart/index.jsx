@@ -17,9 +17,6 @@ import PropTypes from 'prop-types'
 // Importing necessary dependencies for styling
 import { colors } from '../../utils/style/colors'
 
-// Importing the stylesheet for additional styling
-import './performanceChart.css'
-
 /**
  * The PerformanceChart component renders a radar chart to visually represent performance data.
  *
@@ -32,8 +29,17 @@ export default function PerformanceChart({ data }) {
 	if (data) {
 		// JSX structure defining the PerformanceChart component layout
 		return (
-			<ResponsiveContainer id='performance' width='100%'>
-				<RadarChart outerRadius='70%' data={data}>
+			<ResponsiveContainer height='100%' width='100%'>
+				<RadarChart
+					outerRadius='70%'
+					data={data}
+					margin={{
+						top: 5,
+						bottom: 5,
+						left: 15,
+						right: 15,
+					}}
+				>
 					{/* PolarGrid to not display radial lines */}
 					<PolarGrid radialLines={false} />
 

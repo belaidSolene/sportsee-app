@@ -162,11 +162,10 @@ const Main = styled.main`
 	display: flex;
 `
 const HomeSection = styled.section`
-	width: 100%;
-	margin: 67px 90px 88px 107px;
-
+	flex: 1;
+	margin: 5% 7% 6.6% 8%;
 	@media (${device.laptopSmall}) {
-		margin: 50px 67px 66px 80px;
+		margin-right: 0;
 	}
 `
 
@@ -190,18 +189,19 @@ const InfoContainer = styled.div`
 	justify-content: space-between;
 	gap: 28px;
 	width: 100%;
-
 	@media (${device.laptopSmall}) {
 		flex-direction: column-reverse;
+		width: 90%;
 	}
 `
 
 const ChartsContainer = styled.div`
 	width: 70%;
-	height: 1212px;
+	height: 1112px;
 
 	@media (${device.laptopSmall}) {
 		width: 100%;
+		height: 1140px;
 	}
 `
 
@@ -223,17 +223,19 @@ const SmallCharts = styled.div`
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-gap: 30px;
 	margin-top: 20px;
-	width: 100%;
 	height: 300px;
 
 	@media (${device.laptopSmall}) {
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: repeat(2, 300px);
+		grid-template: repeat(2, 300px) / repeat(2, 1fr);
 	}
 `
 
 const AverageSessionsContainer = styled.div`
 	height: inherit;
+	background-color: red;
+	border-radius: 10px;
+	overflow: hidden;
+
 	@media (${device.laptopSmall}) {
 		grid-column: 1 / span 2;
 		grid-row: 2;
@@ -242,10 +244,17 @@ const AverageSessionsContainer = styled.div`
 
 const PerformanceContainer = styled.div`
 	height: inherit;
+	overflow: hidden;
+	background-color: #282d30;
+	border-radius: 10px;
 `
 
 const ScoreContainer = styled.div`
 	height: inherit;
+	overflow: hidden;
+	background-color: #fbfbfb;
+    border-radius: 10px;
+}
 `
 
 const KeyDataContainer = styled.div`
@@ -256,8 +265,8 @@ const KeyDataContainer = styled.div`
 	@media (${device.laptopSmall}) {
 		flex-direction: row;
 		justify-content: space-between;
-		width: 100%;
 		background-color: ${colors.bgGraph};
 		gap: 0;
+		box-sizing: border-box;
 	}
 `

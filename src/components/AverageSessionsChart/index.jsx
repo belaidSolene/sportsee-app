@@ -20,9 +20,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { colors } from '../../utils/style/colors'
 
-// Importing the stylesheet for additional styling
-import './averageSessionsChart.css'
-
 /**
  * The AverageSessionsChart component renders a line chart to visually represent the average session length data.
  *
@@ -51,7 +48,7 @@ export default function AverageSessionsChart({ data }) {
 
 	// JSX structure defining the AverageSessionsChart component layout
 	return (
-		<ResponsiveContainer id='lineChart' width='100%'>
+		<ResponsiveContainer width='100%' height='100%'>
 			<LineChart
 				data={data.sessions}
 				margin={{

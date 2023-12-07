@@ -13,7 +13,6 @@ import { RadialBarChart, RadialBar, ResponsiveContainer } from 'recharts'
 import PropTypes from 'prop-types'
 
 // Importing necessary dependencies for styling
-import './scoreChart.css'
 import { colors } from '../../utils/style/colors'
 
 /**
@@ -35,7 +34,7 @@ export default function ScoreChart({ data }) {
 
 	// JSX structure defining the ScoreChart component layout
 	return (
-		<ResponsiveContainer width='100%' height='100%' id='score'>
+		<ResponsiveContainer width='100%' height='100%'>
 			<RadialBarChart
 				cx='50%'
 				cy='50%'
