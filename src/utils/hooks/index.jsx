@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'react'
-import { redirect } from 'react-router-dom'
-
-import Error from '../../pages/Error'
 
 import user12 from '../../mocks/user12/user12.json'
 import performance12 from '../../mocks/user12/performance12.json'
