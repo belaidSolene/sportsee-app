@@ -14,7 +14,7 @@ import averageSessions18 from '../../mocks/user18/average-sessions18.json'
  * Custom hook to fetch user-related data from multiple endpoints.
  *
  * @param {string} userId - The user ID.
- *  @param {boolean} isMock - A boolean indicating whether to use mock data.
+ *  @param {boolean} useMock - A boolean indicating whether to use mock data.
  * @returns {Object} - An object containing user data, loading state, and error state.
  */
 export function useUserData(userId, useMock = false) {
@@ -43,7 +43,7 @@ export function useUserData(userId, useMock = false) {
  * Custom hook to perform data fetching from multiple URLs concurrently.
  *
  * @param {Object} urls - An object containing URLs to fetch data.
- *  @param {boolean} isMock - A boolean indicating whether to use mock data.
+ *  @param {boolean} useMock - A boolean indicating whether to use mock data.
  * @returns {Object} - An object containing merged data, loading state, and error state.
  */
 function useFetchURLS(urls, useMock) {
