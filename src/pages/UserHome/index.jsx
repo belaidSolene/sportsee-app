@@ -32,7 +32,7 @@ export default function UserHome() {
 	const { id } = useParams()
 
 	// Fetching user data using the 'useUserData' hook
-	const { data, isLoading, error } = useUserData(id)
+	const { data, isLoading, error } = useUserData(id, true)
 
 	if (isLoading) {
 		return <div>isLoading...</div>
